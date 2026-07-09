@@ -51,6 +51,12 @@ body {
   transform-origin: center;
 }
 
+@keyframes petal-rise {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.7; }
+  100% { transform: translateY(-80vh) rotate(220deg); opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
