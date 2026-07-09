@@ -1,27 +1,6 @@
 import { Character } from './Character'
 import { Bloom } from './Bloom'
-
-const FLOWERS = [
-  { left: '14%', c: '#E8697F', h: 20 },
-  { left: '28%', c: '#FBF3DE', h: 16 },
-  { left: '40%', c: '#E8B4B8', h: 22 },
-  { left: '60%', c: '#F4C36A', h: 18 },
-  { left: '72%', c: '#E8697F', h: 22 },
-  { left: '86%', c: '#E8B4B8', h: 16 },
-]
-
-function PixelFlower({ color, height }) {
-  return (
-    <svg width={height * 0.7} height={height} viewBox="0 0 6 8" shapeRendering="crispEdges" style={{ imageRendering: 'pixelated' }} aria-hidden="true">
-      <rect x="2" y="4" width="1" height="4" fill="#4A6B3E" />
-      <rect x="2" y="1" width="1" height="1" fill={color} />
-      <rect x="1" y="2" width="1" height="1" fill={color} />
-      <rect x="3" y="2" width="1" height="1" fill={color} />
-      <rect x="2" y="3" width="1" height="1" fill={color} />
-      <rect x="2" y="2" width="1" height="1" fill="#F4C36A" />
-    </svg>
-  )
-}
+import { Flowers } from './Flowers'
 
 export function QuestionScreen({ onYes, onNo }) {
   return (
@@ -30,13 +9,7 @@ export function QuestionScreen({ onYes, onNo }) {
       {/* Avatar arrives here for the first time, above the card */}
       <Character emotion="walk" bottom="58%" scale={1.45} />
       {/* Flowers for the proposition — a little meadow at his feet */}
-      <div className="absolute inset-x-0" style={{ bottom: '46%' }} aria-hidden="true">
-        {FLOWERS.map((f, i) => (
-          <span key={i} className="absolute" style={{ left: f.left, bottom: 0 }}>
-            <PixelFlower color={f.c} height={f.h} />
-          </span>
-        ))}
-      </div>
+      <Flowers />
       <div
         className="absolute left-0 right-0 bottom-0 px-6 pt-7 pb-9 rounded-t-3xl z-10"
         style={{

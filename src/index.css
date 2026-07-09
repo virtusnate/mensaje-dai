@@ -55,6 +55,7 @@ body {
   50% { transform: translateY(-1px); }
 }
 .sprite-breathe { animation: sprite-breathe 5s ease-in-out infinite; }
+.sprite-breathe-fast { animation: sprite-breathe 3.2s ease-in-out infinite; }
 
 @keyframes fade-rise {
   0% { opacity: 0; transform: translateY(14px); }

@@ -27,12 +27,12 @@ function Bouquet({ state }) {
   )
 }
 
-export function Character({ emotion, bottom = '34%', scale = 1 }) {
+export function Character({ emotion, bottom = '34%', scale = 1, breatheFast = false }) {
   const sad = String(emotion).startsWith('sad')
   const dead = emotion === 'dead'
   const happy = emotion === 'happy'
   const bouquetState = dead || sad ? 'wilt' : happy ? 'open' : 'fresh'
-  const animClass = dead ? '' : happy ? 'sprite-sway' : 'sprite-breathe'
+  const animClass = dead ? '' : happy ? 'sprite-sway' : breatheFast ? 'sprite-breathe-fast' : 'sprite-breathe'
   const eyeY = sad || dead ? 5 : 4
 
   return (

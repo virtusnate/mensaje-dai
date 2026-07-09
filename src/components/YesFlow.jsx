@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { QuestionCard } from './QuestionCard'
 import { FloralFinale } from './FloralFinale'
 import { Character } from './Character'
+import { Flowers } from './Flowers'
 import { notify } from '../lib/notify'
 
 const WHEN = ['Este Sábado', 'El próximo Lunes', 'El próximo Viernes']
@@ -23,7 +24,13 @@ export function YesFlow() {
 
   return (
     <div className="absolute inset-0">
-      <Character emotion="happy" bottom="70%" />
+      {step !== 'finale' && (
+        <>
+          {/* Same avatar as the proposition — offering the bouquet, just breathing a touch faster */}
+          <Character emotion="walk" bottom="58%" scale={1.45} breatheFast />
+          <Flowers />
+        </>
+      )}
       {step === 'cuando' && (
         <QuestionCard title="¿Cuándo puedes?" options={WHEN} onAnswer={answerCuando} />
       )}
