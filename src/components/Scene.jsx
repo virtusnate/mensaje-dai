@@ -23,6 +23,19 @@ function pixelHill(baseY, amp, freq, phase, fill, key) {
   return cols
 }
 
+// Blocky pixel cloud (two stacked rows) that reads at low res.
+function pixelCloud(x, y, key) {
+  return (
+    <g key={key} fill="#FBF3DE">
+      <rect x={x + 2} y={y} width="6" height="2" />
+      <rect x={x} y={y + 2} width="10" height="2" />
+    </g>
+  )
+}
+
+const CLOUDS = [
+  [14, 14], [70, 8], [98, 20],
+]
 const STARS = [
   [10, 8], [22, 14], [34, 6], [48, 12], [61, 7], [74, 15], [88, 9], [101, 13], [112, 6], [17, 22],
   [55, 20], [95, 22],
@@ -38,6 +51,7 @@ export function Scene({ p, drift = 0 }) {
   // Moon owns the dusk; it fades as the sun rises into the golden hour.
   const moonOpacity = Math.max(0, 1 - p * 1.8)
   const sunOpacity = Math.min(1, Math.max(0, (p - 0.35) * 2))
+  const cloudOpacity = Math.min(0.85, Math.max(0, (p - 0.4) * 1.8)) // clouds belong to the day
   const moonColor = '#E9E6F2'
 
   return (
@@ -62,6 +76,9 @@ export function Scene({ p, drift = 0 }) {
         <g data-testid="scene-parallax" transform={`translate(${drift} 0)`} style={{ transition: 'transform 900ms linear' }}>
           <g style={{ opacity: moonOpacity, transition: 'opacity 900ms ease-out' }}>{pixelSun(88, 14, moonColor)}</g>
           <g style={{ opacity: sunOpacity, transition: 'opacity 900ms ease-out' }}>{pixelSun(60, sunY, sunColor)}</g>
+          <g style={{ opacity: cloudOpacity, transition: 'opacity 900ms ease-out' }}>
+            {CLOUDS.map(([x, y], i) => pixelCloud(x, y, `c-${i}`))}
+          </g>
           <g data-testid="scene-hills">{pixelHill(70, 14, 26, 1.3, backHill, 'b')}</g>
           <g>{pixelHill(78, 12, 15, 4.2, frontHill, 'f')}</g>
           <rect data-testid="scene-meadow" x="-40" y="82" width="200" height="8" fill={meadow} />
