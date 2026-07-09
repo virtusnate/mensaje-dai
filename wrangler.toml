@@ -1,0 +1,8 @@
+name = "ultima-cita-notify"
+main = "worker/notify.js"
+compatibility_date = "2026-07-08"
+
+# Secrets (set via: npx wrangler secret put TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID)
+# Vars below are non-secret and safe to commit.
+[vars]
+ALLOWED_ORIGIN = "https://REPLACE-WITH-YOUR-GITLAB-PAGES-ORIGIN"
