@@ -3,20 +3,29 @@ import { render } from '@testing-library/react'
 import { Character } from './Character'
 
 describe('Character', () => {
-  it('rises bottom→top as p increases (centered horizontally)', () => {
-    const { getByTestId } = render(<Character emotion="walk" p={0.5} />)
+  it('is grounded (default bottom 34%) and centered', () => {
+    const { getByTestId } = render(<Character emotion="walk" />)
     const el = getByTestId('character')
     expect(el.style.left).toBe('50%')
-    expect(el.style.bottom).toBe('59%') // lerp(44, 74, 0.5)
+    expect(el.style.bottom).toBe('34%')
   })
-
-  it('reflects the current emotion on the root element', () => {
-    const { getByTestId } = render(<Character emotion="happy" p={0} />)
-    expect(getByTestId('character').dataset.emotion).toBe('happy')
+  it('accepts a custom bottom', () => {
+    const { getByTestId } = render(<Character emotion="walk" bottom="56%" />)
+    expect(getByTestId('character').style.bottom).toBe('56%')
   })
-
-  it('renders a self-contained SVG pixel sprite (no external animation)', () => {
-    const { container } = render(<Character emotion="walk" p={0} />)
-    expect(container.querySelector('svg')).toBeInTheDocument()
+  it('reflects the emotion and shows the bouquet while alive', () => {
+    const { getByTestId } = render(<Character emotion="walk" />)
+    expect(getByTestId('character').dataset.emotion).toBe('walk')
+    expect(getByTestId('bouquet')).toBeInTheDocument()
+  })
+  it('drops the bouquet when dead', () => {
+    const { queryByTestId } = render(<Character emotion="dead" />)
+    expect(queryByTestId('bouquet')).not.toBeInTheDocument()
+  })
+  it('breathes only while idle (walk), not when happy', () => {
+    const { getByTestId, rerender } = render(<Character emotion="walk" />)
+    expect(getByTestId('sprite-anim').className).toContain('sprite-breathe')
+    rerender(<Character emotion="happy" />)
+    expect(getByTestId('sprite-anim').className).toContain('sprite-sway')
   })
 })

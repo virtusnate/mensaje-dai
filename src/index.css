@@ -60,3 +60,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+@keyframes sprite-breathe {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.5px); }
+}
+.sprite-breathe { animation: sprite-breathe 3s ease-in-out infinite; }
