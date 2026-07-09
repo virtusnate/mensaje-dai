@@ -13,10 +13,7 @@ export function NoEscalation({ onDead, onYes }) {
   }, [state.dead])
 
   function handleNo() {
-    setState((s) => {
-      const next = tapNo(s)
-      return next
-    })
+    setState(tapNo)
   }
 
   useEffect(() => {

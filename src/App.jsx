@@ -18,10 +18,14 @@ const NO_ESCALATION = 'NO_ESCALATION'
 export default function App() {
   const [screen, setScreen] = useState(READING)
   const [beat, setBeat] = useState(0)
+  const [noDead, setNoDead] = useState(false)
 
   const total = STORY.length
   const readingP = total > 1 ? beat / (total - 1) : 1
-  const p = screen === READING ? readingP : 1
+  const p =
+    screen === READING ? readingP
+    : screen === NO_ESCALATION && noDead ? 0.1
+    : 1
 
   function advance() {
     if (beat < total - 1) setBeat((b) => b + 1)
@@ -29,7 +33,7 @@ export default function App() {
   }
 
   return (
-    <div className="relative mx-auto h-full overflow-hidden" style={{ maxWidth: 480 }}>
+    <div className="relative mx-auto overflow-hidden" style={{ maxWidth: 480, height: '100dvh', paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}>
       <Scene p={p} />
       <Particles p={p} />
 
@@ -47,7 +51,7 @@ export default function App() {
 
       {screen === NO_ESCALATION && (
         <NoEscalation
-          onDead={() => notify({ kind: 'no' })}
+          onDead={() => { notify({ kind: 'no' }); setNoDead(true) }}
           onYes={() => setScreen(YES_FLOW)}
         />
       )}
