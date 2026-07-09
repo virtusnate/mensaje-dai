@@ -48,4 +48,10 @@ describe('NoEscalation', () => {
     await userEvent.click(screen.getByRole('button', { name: /^sí$/i }))
     expect(onYes).toHaveBeenCalled()
   })
+
+  it('shows a glowing-flower ember on the dead-end', async () => {
+    render(<NoEscalation onDead={() => {}} onYes={() => {}} />)
+    await tapNoTimes(8)
+    expect(screen.getByTestId('ember')).toBeInTheDocument()
+  })
 })

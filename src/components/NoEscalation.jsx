@@ -32,10 +32,14 @@ export function NoEscalation({ onDead, onYes }) {
       <Character emotion={emotion} p={p} />
 
       {state.dead ? (
-        <div className="relative z-10 mt-24">
-          <p className="font-script text-3xl mb-8" style={{ color: 'var(--cream)' }}>
-            {'…'}
-          </p>
+        <div className="relative z-10 mt-24 flex flex-col items-center">
+          <span
+            data-testid="ember"
+            className="mb-6"
+            style={{ color: '#F4C36A', fontSize: 22, textShadow: '0 0 10px #F4C36A' }}
+          >
+            ✿
+          </span>
           <button
             onClick={onYes}
             className="px-4 py-2 rounded-full font-body text-sm opacity-70"
