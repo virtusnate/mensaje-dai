@@ -4,6 +4,7 @@ import { render } from '@testing-library/react'
 vi.mock('@tsparticles/react', () => ({
   __esModule: true,
   initParticlesEngine: vi.fn().mockResolvedValue(undefined),
+  ParticlesProvider: ({ children }) => <>{children}</>,
   default: (props) => <div data-testid="tsparticles" data-options={JSON.stringify(props.options)} />,
 }))
 vi.mock('@tsparticles/slim', () => ({ loadSlim: vi.fn() }))

@@ -1,16 +1,20 @@
-# React + Vite
+# Última Cita
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Immersive storytelling gift app. React + Vite. Telegram notifications via a Cloudflare Worker.
 
-Currently, two official plugins are available:
+## Local dev
+1. `npm install`
+2. Copy `.env.example` → `.env.local`, set `VITE_NOTIFY_URL` to your Worker URL.
+3. `npm run dev`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Worker (Telegram relay)
+1. `npx wrangler login`
+2. Set `ALLOWED_ORIGIN` in `wrangler.toml` to your GitLab Pages origin.
+3. `npx wrangler secret put TELEGRAM_BOT_TOKEN`  (bot @dai_answer_bot token)
+4. `npx wrangler secret put TELEGRAM_CHAT_ID`     (1192867136)
+5. `npx wrangler deploy` → note the Worker URL → put it in `.env.local` and the GitLab CI/CD variable `VITE_NOTIFY_URL`.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Deploy (GitLab Pages)
+- Push to the default branch. The `pages` CI job builds and publishes `public/`.
+- Set CI/CD variable `VITE_NOTIFY_URL` in GitLab project settings.
+- Ensure `vite.config.js` `base` matches your Pages path (`/ultima-cita/` for a project page).

@@ -1,18 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
-import ParticlesLib, { initParticlesEngine } from '@tsparticles/react'
+import { useCallback, useMemo } from 'react'
+import ParticlesLib, { ParticlesProvider } from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim'
 import { mixHex, lerp } from '../lib/progress'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 
-export function Particles({ p }) {
-  const [ready, setReady] = useState(false)
+function ParticlesInner({ p }) {
   const reduced = useReducedMotion()
-
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine)
-    }).then(() => setReady(true))
-  }, [])
 
   const options = useMemo(
     () => ({
@@ -30,6 +23,17 @@ export function Particles({ p }) {
     [p, reduced]
   )
 
-  if (!ready) return null
   return <ParticlesLib id="tsparticles" options={options} className="absolute inset-0" />
+}
+
+export function Particles({ p }) {
+  const init = useCallback(async (engine) => {
+    await loadSlim(engine)
+  }, [])
+
+  return (
+    <ParticlesProvider init={init}>
+      <ParticlesInner p={p} />
+    </ParticlesProvider>
+  )
 }
