@@ -1,5 +1,11 @@
 image: node:20
 
+# Deploys to GitLab Pages on push to the default branch.
+# Add these under Settings → CI/CD → Variables (both must keep the VITE_ prefix so Vite
+# injects them into the client build):
+#   VITE_TELEGRAM_BOT_TOKEN   — the Telegram bot token
+#   VITE_TELEGRAM_CHAT_ID     — the destination chat id
+# GitLab injects project CI/CD variables into the job automatically, so `npm run build` sees them.
 pages:
   stage: deploy
   script:
@@ -10,7 +16,5 @@ pages:
   artifacts:
     paths:
       - public
-  variables:
-    VITE_NOTIFY_URL: $VITE_NOTIFY_URL
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
