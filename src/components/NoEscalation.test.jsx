@@ -2,11 +2,6 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-vi.mock('lottie-react', () => ({
-  __esModule: true,
-  default: () => <div data-testid="lottie" />,
-}))
-
 import { NoEscalation } from './NoEscalation'
 
 async function tapNoTimes(n) {
