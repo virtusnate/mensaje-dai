@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { STORY } from './content/story'
 import { Scene } from './components/Scene'
-import { Particles } from './components/Particles'
+import { Petals } from './components/Petals'
 import { Character } from './components/Character'
 import { StoryText } from './components/StoryText'
 import { ProgressDots } from './components/ProgressDots'
@@ -48,7 +48,7 @@ export default function App() {
         {screen === READING && <Character emotion="walk" p={p} />}
       </div>
 
-      <Particles p={p} />
+      <Petals mode={screen === YES_FLOW ? 'burst' : screen === QUESTION ? 'question' : 'reading'} />
 
       {screen === READING && (
         <>
