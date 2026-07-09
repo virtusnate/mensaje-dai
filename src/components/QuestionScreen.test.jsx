@@ -18,4 +18,9 @@ describe('QuestionScreen', () => {
     expect(onYes).toHaveBeenCalled()
     expect(onNo).toHaveBeenCalled()
   })
+
+  it('shows the expectant avatar waiting', () => {
+    render(<QuestionScreen onYes={() => {}} onNo={() => {}} />)
+    expect(screen.getByTestId('character')).toBeInTheDocument()
+  })
 })
