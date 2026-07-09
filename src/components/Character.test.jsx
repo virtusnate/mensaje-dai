@@ -3,9 +3,11 @@ import { render } from '@testing-library/react'
 import { Character } from './Character'
 
 describe('Character', () => {
-  it('positions itself horizontally from p', () => {
+  it('rises bottom→top as p increases (centered horizontally)', () => {
     const { getByTestId } = render(<Character emotion="walk" p={0.5} />)
-    expect(getByTestId('character').style.left).toBe('47.5%')
+    const el = getByTestId('character')
+    expect(el.style.left).toBe('50%')
+    expect(el.style.bottom).toBe('59%') // lerp(44, 74, 0.5)
   })
 
   it('reflects the current emotion on the root element', () => {

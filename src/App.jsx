@@ -9,6 +9,7 @@ import { QuestionScreen } from './components/QuestionScreen'
 import { NoEscalation } from './components/NoEscalation'
 import { YesFlow } from './components/YesFlow'
 import { notify } from './lib/notify'
+import { lerp } from './lib/progress'
 
 const READING = 'READING'
 const QUESTION = 'QUESTION'
@@ -34,12 +35,23 @@ export default function App() {
 
   return (
     <div className="relative mx-auto overflow-hidden" style={{ maxWidth: 480, height: '100dvh', paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}>
-      <Scene p={p} />
+      {/* Camera: wide at the start, zooming closer as the text ends */}
+      <div
+        className="absolute inset-0 overflow-hidden"
+        style={{
+          transform: `scale(${lerp(1, 1.4, p)})`,
+          transformOrigin: '50% 45%',
+          transition: 'transform 900ms ease-out',
+        }}
+      >
+        <Scene p={p} />
+        {screen === READING && <Character emotion="walk" p={p} />}
+      </div>
+
       <Particles p={p} />
 
       {screen === READING && (
         <>
-          <Character emotion="walk" p={p} />
           <ProgressDots total={total} current={beat} />
           <StoryText text={STORY[beat]} onAdvance={advance} />
         </>

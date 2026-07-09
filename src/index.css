@@ -33,17 +33,23 @@ body {
 
 .font-script { font-family: 'Great Vibes', cursive; }
 
-/* Subtle pixel-sprite motion — intentionally understated so text stays the focus */
-@keyframes sprite-bob {
+/* The sprite is still while idle (no bob). Only a slow, gentle sway when celebrating, and a
+   slow heart pulse — nothing quick. */
+@keyframes sprite-sway {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
+  50% { transform: translateY(-3px); }
 }
-@keyframes sprite-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+.sprite-sway { animation: sprite-sway 1.6s ease-in-out infinite; }
+
+@keyframes heart-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
 }
-.sprite-walk { animation: sprite-bob 0.7s ease-in-out infinite; }
-.sprite-bounce { animation: sprite-bounce 0.5s ease-in-out infinite; }
+.heart-pulse {
+  animation: heart-pulse 2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
 
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
