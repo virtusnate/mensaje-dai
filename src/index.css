@@ -52,9 +52,9 @@ body {
 
 @keyframes sprite-breathe {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-1.5px); }
+  50% { transform: translateY(-1px); }
 }
-.sprite-breathe { animation: sprite-breathe 3s ease-in-out infinite; }
+.sprite-breathe { animation: sprite-breathe 5s ease-in-out infinite; }
 
 @keyframes fade-rise {
   0% { opacity: 0; transform: translateY(14px); }

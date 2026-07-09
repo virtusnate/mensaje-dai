@@ -23,7 +23,7 @@ export function YesFlow() {
 
   return (
     <div className="absolute inset-0">
-      <Character emotion="happy" />
+      <Character emotion="happy" bottom="70%" />
       {step === 'cuando' && (
         <QuestionCard title="¿Cuándo puedes?" options={WHEN} onAnswer={answerCuando} />
       )}

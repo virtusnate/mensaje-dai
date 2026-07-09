@@ -3,7 +3,6 @@ import { STORY } from './content/story'
 import { Scene } from './components/Scene'
 import { Petals } from './components/Petals'
 import { Bloom } from './components/Bloom'
-import { Character } from './components/Character'
 import { StoryText } from './components/StoryText'
 import { ProgressDots } from './components/ProgressDots'
 import { QuestionScreen } from './components/QuestionScreen'
@@ -46,7 +45,6 @@ export default function App() {
         style={{ transform: `scale(${lerp(1, 1.4, p)})`, transformOrigin: '50% 45%', transition: 'transform 900ms ease-out' }}
       >
         <Scene p={p} drift={drift} />
-        {screen === READING && <Character emotion="walk" />}
       </div>
 
       <Bloom intensity={screen === QUESTION ? 0 : bloom} />

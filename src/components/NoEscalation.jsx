@@ -28,7 +28,7 @@ export function NoEscalation({ onDead, onYes }) {
 
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
-      <Character emotion={emotion} />
+      <Character emotion={emotion} bottom="62%" />
 
       {state.dead ? (
         <div className="relative z-10 mt-24 flex flex-col items-center">

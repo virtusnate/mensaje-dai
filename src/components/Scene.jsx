@@ -35,6 +35,10 @@ export function Scene({ p, drift = 0 }) {
   const meadow = mixHex('#3E4A38', '#6E8B4E', p)
   const sunY = lerp(52, 34, p) // sun rises as the story progresses
   const starOpacity = Math.max(0, 1 - p * 1.6)
+  // Moon owns the dusk; it fades as the sun rises into the golden hour.
+  const moonOpacity = Math.max(0, 1 - p * 1.8)
+  const sunOpacity = Math.min(1, Math.max(0, (p - 0.35) * 2))
+  const moonColor = '#E9E6F2'
 
   return (
     <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
@@ -56,7 +60,8 @@ export function Scene({ p, drift = 0 }) {
           ))}
         </g>
         <g data-testid="scene-parallax" transform={`translate(${drift} 0)`} style={{ transition: 'transform 900ms linear' }}>
-          <g style={{ transition: 'all 900ms ease-out' }}>{pixelSun(60, sunY, sunColor)}</g>
+          <g style={{ opacity: moonOpacity, transition: 'opacity 900ms ease-out' }}>{pixelSun(88, 14, moonColor)}</g>
+          <g style={{ opacity: sunOpacity, transition: 'opacity 900ms ease-out' }}>{pixelSun(60, sunY, sunColor)}</g>
           <g data-testid="scene-hills">{pixelHill(70, 14, 26, 1.3, backHill, 'b')}</g>
           <g>{pixelHill(78, 12, 15, 4.2, frontHill, 'f')}</g>
           <rect data-testid="scene-meadow" x="-40" y="82" width="200" height="8" fill={meadow} />

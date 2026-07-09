@@ -10,8 +10,8 @@ export function QuestionCard({ title, options, onAnswer }) {
   }
 
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
-      <h2 className="font-script text-4xl mb-8" style={{ color: 'var(--sepia)' }}>
+    <div className="absolute inset-0 flex flex-col items-center justify-end px-8 pb-16 text-center">
+      <h2 className="font-body italic text-3xl md:text-4xl mb-8" style={{ color: 'var(--sepia)' }}>
         {title}
       </h2>
       <div className="flex flex-col gap-3 w-full max-w-xs">
