@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { QuestionCard } from './QuestionCard'
-import { HeartFinale } from './HeartFinale'
+import { FloralFinale } from './FloralFinale'
 import { Character } from './Character'
 import { notify } from '../lib/notify'
 
@@ -30,7 +30,7 @@ export function YesFlow() {
       {step === 'hora' && (
         <QuestionCard title="¿A qué hora te gustaría?" options={TIME} onAnswer={answerHora} />
       )}
-      {step === 'finale' && <HeartFinale />}
+      {step === 'finale' && <FloralFinale />}
     </div>
   )
 }
