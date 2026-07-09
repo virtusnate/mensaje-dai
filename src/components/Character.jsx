@@ -1,4 +1,4 @@
-import Lottie from 'lottie-react'
+import { Lottie } from '../lib/lottie'
 import { charXPercent } from '../lib/progress'
 import { CHARACTER } from '../assets/lottie'
 import placeholder from '../assets/lottie/placeholder.json'

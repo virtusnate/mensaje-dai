@@ -1,4 +1,4 @@
-import Lottie from 'lottie-react'
+import { Lottie } from '../lib/lottie'
 import { HEART } from '../assets/lottie'
 
 export function HeartFinale() {
