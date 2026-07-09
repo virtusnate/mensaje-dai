@@ -3,7 +3,7 @@ import { createChiptune } from '../lib/chiptune'
 
 // Small speaker toggle (top-right). Chiptune starts on the first tap anywhere (browser autoplay
 // policy), and `mood` switches the loop (story → hopeful on Sí).
-export function MusicToggle({ mood }) {
+export function MusicToggle({ mood, sfx = null }) {
   const engine = useRef(null)
   const [muted, setMuted] = useState(false)
 
@@ -17,6 +17,10 @@ export function MusicToggle({ mood }) {
   useEffect(() => {
     if (engine.current) engine.current.setMood(mood)
   }, [mood])
+
+  useEffect(() => {
+    if (sfx === 'gameover' && engine.current) engine.current.playGameOver()
+  }, [sfx])
 
   function toggle() {
     const e = engine.current

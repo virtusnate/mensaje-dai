@@ -102,5 +102,17 @@ export function createChiptune() {
     isMuted() {
       return muted
     },
+    // One-shot descending "game over" jingle ending on a low thud (the definitive No).
+    playGameOver() {
+      if (!ensure()) return
+      if (ctx.state === 'suspended') ctx.resume()
+      const seq = [[659, 0.16], [587, 0.16], [494, 0.16], [440, 0.18], [392, 0.5]]
+      let t = ctx.currentTime + 0.05
+      for (const [f, d] of seq) {
+        note(f, t, d, 'square', 0.5)
+        t += d
+      }
+      note(196, t, 0.7, 'triangle', 0.5) // low thud
+    },
   }
 }
