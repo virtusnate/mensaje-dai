@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 vi.mock('./lib/notify', () => ({ notify: vi.fn().mockResolvedValue(undefined) }))
-vi.mock('lottie-react', () => ({ __esModule: true, default: () => <div data-testid="lottie" /> }))
 vi.mock('./components/Petals', () => ({ Petals: () => <div data-testid="petals" /> }))
 
 import App from './App'

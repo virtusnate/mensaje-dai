@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { STORY } from './content/story'
 import { Scene } from './components/Scene'
 import { Petals } from './components/Petals'
+import { Bloom } from './components/Bloom'
 import { Character } from './components/Character'
 import { StoryText } from './components/StoryText'
 import { ProgressDots } from './components/ProgressDots'
@@ -10,6 +11,7 @@ import { NoEscalation } from './components/NoEscalation'
 import { YesFlow } from './components/YesFlow'
 import { notify } from './lib/notify'
 import { lerp } from './lib/progress'
+import { bloomIntensity, petalMode, driftX } from './lib/emotion'
 
 const READING = 'READING'
 const QUESTION = 'QUESTION'
@@ -28,6 +30,10 @@ export default function App() {
     : screen === NO_ESCALATION && noDead ? 0.1
     : 1
 
+  const bloom = bloomIntensity(screen, p)
+  const petals = petalMode(screen)
+  const drift = screen === READING ? driftX(readingP) : driftX(1)
+
   function advance() {
     if (beat < total - 1) setBeat((b) => b + 1)
     else setScreen(QUESTION)
@@ -35,20 +41,16 @@ export default function App() {
 
   return (
     <div className="relative mx-auto overflow-hidden" style={{ maxWidth: 480, height: '100dvh', paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}>
-      {/* Camera: wide at the start, zooming closer as the text ends */}
       <div
         className="absolute inset-0 overflow-hidden"
-        style={{
-          transform: `scale(${lerp(1, 1.4, p)})`,
-          transformOrigin: '50% 45%',
-          transition: 'transform 900ms ease-out',
-        }}
+        style={{ transform: `scale(${lerp(1, 1.4, p)})`, transformOrigin: '50% 45%', transition: 'transform 900ms ease-out' }}
       >
-        <Scene p={p} />
-        {screen === READING && <Character emotion="walk" p={p} />}
+        <Scene p={p} drift={drift} />
+        {screen === READING && <Character emotion="walk" />}
       </div>
 
-      <Petals mode={screen === YES_FLOW ? 'burst' : screen === QUESTION ? 'question' : 'reading'} />
+      <Bloom intensity={screen === QUESTION ? 0 : bloom} />
+      <Petals mode={petals} />
 
       {screen === READING && (
         <>
@@ -62,10 +64,7 @@ export default function App() {
       )}
 
       {screen === NO_ESCALATION && (
-        <NoEscalation
-          onDead={() => { notify({ kind: 'no' }); setNoDead(true) }}
-          onYes={() => setScreen(YES_FLOW)}
-        />
+        <NoEscalation onDead={() => { notify({ kind: 'no' }); setNoDead(true) }} onYes={() => setScreen(YES_FLOW)} />
       )}
 
       {screen === YES_FLOW && <YesFlow />}
