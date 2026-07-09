@@ -2,7 +2,7 @@ import { skyGradient, mixHex, lerp } from '../lib/progress'
 
 // Romantic pixel-art landscape. The sky keeps the smooth warming transition (twilight → golden
 // hour with p); everything in front is blocky pixel art: a rising sun, fading stars, layered
-// rolling hills, and little flowers. Rendered crisp via shape-rendering=crispEdges.
+// rolling hills. Rendered crisp via shape-rendering=crispEdges.
 
 // A chunky "pixel" circle (rows of 2-tall rects) that reads as a low-res sun.
 function pixelSun(cx, cy, fill) {
@@ -27,12 +27,8 @@ const STARS = [
   [10, 8], [22, 14], [34, 6], [48, 12], [61, 7], [74, 15], [88, 9], [101, 13], [112, 6], [17, 22],
   [55, 20], [95, 22],
 ]
-const FLOWERS = [
-  { x: 14, c: '#E8B4B8' }, { x: 33, c: '#FBF3DE' }, { x: 52, c: '#E2A0B0' },
-  { x: 71, c: '#F4C99A' }, { x: 90, c: '#E8B4B8' }, { x: 104, c: '#FBF3DE' },
-]
 
-export function Scene({ p }) {
+export function Scene({ p, drift = 0 }) {
   const sunColor = mixHex('#E8965E', '#FFE39A', p)
   const backHill = mixHex('#7E8B93', '#E6B87A', p)
   const frontHill = mixHex('#4A5A4E', '#89A05A', p)
@@ -54,30 +50,17 @@ export function Scene({ p }) {
         shapeRendering="crispEdges"
         style={{ imageRendering: 'pixelated' }}
       >
-        {/* stars (dusk only) */}
         <g style={{ opacity: starOpacity, transition: 'opacity 900ms ease-out' }}>
           {STARS.map(([x, y], i) => (
             <rect key={i} x={x} y={y} width="1" height="1" fill="#FBF3DE" />
           ))}
         </g>
-        {/* sun */}
-        <g style={{ transition: 'all 900ms ease-out' }}>{pixelSun(60, sunY, sunColor)}</g>
-        {/* distant hills */}
-        <g data-testid="scene-hills">{pixelHill(70, 14, 26, 1.3, backHill, 'b')}</g>
-        {/* front hills */}
-        <g>{pixelHill(78, 12, 15, 4.2, frontHill, 'f')}</g>
-        {/* meadow floor */}
-        <rect data-testid="scene-meadow" x="0" y="82" width="120" height="8" fill={meadow} />
-        {/* pixel flowers along the front hill */}
-        {FLOWERS.map((fl, i) => (
-          <g key={i}>
-            <rect x={fl.x} y="76" width="1" height="4" fill="#4A6B3E" />
-            <rect x={fl.x - 1} y="74" width="1" height="1" fill={fl.c} />
-            <rect x={fl.x + 1} y="74" width="1" height="1" fill={fl.c} />
-            <rect x={fl.x} y="73" width="1" height="1" fill={fl.c} />
-            <rect x={fl.x} y="75" width="1" height="1" fill="#F7D489" />
-          </g>
-        ))}
+        <g data-testid="scene-parallax" transform={`translate(${drift} 0)`} style={{ transition: 'transform 900ms linear' }}>
+          <g style={{ transition: 'all 900ms ease-out' }}>{pixelSun(60, sunY, sunColor)}</g>
+          <g data-testid="scene-hills">{pixelHill(70, 14, 26, 1.3, backHill, 'b')}</g>
+          <g>{pixelHill(78, 12, 15, 4.2, frontHill, 'f')}</g>
+          <rect data-testid="scene-meadow" x="-40" y="82" width="200" height="8" fill={meadow} />
+        </g>
       </svg>
     </div>
   )
