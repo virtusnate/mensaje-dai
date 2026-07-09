@@ -33,23 +33,12 @@ body {
 
 .font-script { font-family: 'Great Vibes', cursive; }
 
-/* The sprite is still while idle (no bob). Only a slow, gentle sway when celebrating, and a
-   slow heart pulse — nothing quick. */
+/* The sprite is still while idle (only a subtle breathe). A slow, gentle sway when celebrating. */
 @keyframes sprite-sway {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-3px); }
 }
 .sprite-sway { animation: sprite-sway 1.6s ease-in-out infinite; }
-
-@keyframes heart-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-}
-.heart-pulse {
-  animation: heart-pulse 2s ease-in-out infinite;
-  transform-box: fill-box;
-  transform-origin: center;
-}
 
 @keyframes petal-rise {
   0% { transform: translateY(0) rotate(0deg); opacity: 0; }

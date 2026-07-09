@@ -25,11 +25,10 @@ export function NoEscalation({ onDead, onYes }) {
   }
 
   const emotion = state.dead ? 'dead' : `sad-${Math.max(1, sadnessStage(state.count))}`
-  const p = state.dead ? 0.1 : 0.5
 
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
-      <Character emotion={emotion} p={p} />
+      <Character emotion={emotion} />
 
       {state.dead ? (
         <div className="relative z-10 mt-24 flex flex-col items-center">
