@@ -14,6 +14,6 @@ describe('STORY', () => {
 
   it('starts with the opening line and ends before the question', () => {
     expect(STORY[0]).toMatch(/^No me imaginaba/)
-    expect(STORY[STORY.length - 1]).toMatch(/mejor última cita\.$/)
+    expect(STORY[STORY.length - 1]).toMatch(/mejor última cita\.\.\.$/)
   })
 })

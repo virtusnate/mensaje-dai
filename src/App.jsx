@@ -4,6 +4,7 @@ import { Scene } from './components/Scene'
 import { Petals } from './components/Petals'
 import { Bloom } from './components/Bloom'
 import { StoryText } from './components/StoryText'
+import { MusicToggle } from './components/MusicToggle'
 import { ProgressDots } from './components/ProgressDots'
 import { QuestionScreen } from './components/QuestionScreen'
 import { NoEscalation } from './components/NoEscalation'
@@ -49,6 +50,7 @@ export default function App() {
 
       <Bloom intensity={screen === QUESTION ? 0 : bloom} />
       <Petals mode={petals} />
+      <MusicToggle mood={screen === YES_FLOW ? 'hopeful' : 'story'} />
 
       {screen === READING && (
         <>
