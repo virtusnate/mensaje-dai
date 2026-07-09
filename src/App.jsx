@@ -50,7 +50,7 @@ export default function App() {
 
       <Bloom intensity={screen === QUESTION ? 0 : bloom} />
       <Petals mode={petals} />
-      <MusicToggle mood={screen === YES_FLOW ? 'hopeful' : 'story'} />
+      <MusicToggle mood={screen === YES_FLOW ? 'hopeful' : screen === NO_ESCALATION ? 'sad' : 'story'} />
 
       {screen === READING && (
         <>

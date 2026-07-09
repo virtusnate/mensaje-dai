@@ -20,6 +20,14 @@ const MOODS = {
     bass: [131, 98, 110, 87],
     gain: 0.42,
   },
+  // Slow descending minor line with rests: mournful (when she says No)
+  sad: {
+    bpm: 68,
+    wave: 'triangle',
+    lead: [659, 0, 587, 0, 523, 0, 494, 0, 440, 0, 392, 0, 440, 0, 0, 0],
+    bass: [110, 98, 87, 82],
+    gain: 0.4,
+  },
 }
 
 const VOLUME = 0.16

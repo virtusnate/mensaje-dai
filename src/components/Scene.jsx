@@ -1,5 +1,11 @@
 import { skyGradient, mixHex, lerp } from '../lib/progress'
 
+// Eased 0..1 ramp — gives a natural, gradual dawn instead of a linear pop.
+function smoothstep(a, b, x) {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)))
+  return t * t * (3 - 2 * t)
+}
+
 // Romantic pixel-art landscape. The sky keeps the smooth warming transition (twilight → golden
 // hour with p); in front is blocky pixel art: a moon that gives way to a glowing sun, fading
 // stars, drifting clouds, and layered rolling hills. Rendered crisp via crispEdges.
@@ -56,11 +62,14 @@ export function Scene({ p, drift = 0 }) {
   const meadow = mixHex('#3E4A38', '#6E8B4E', p)
   const sunY = lerp(46, 22, p) // sun rises as the story progresses
   const sunCenterY = sunY + 8
-  const starOpacity = Math.max(0, 1 - p * 1.6)
-  // Moon owns the dusk; it hands off to the sun early, so the day clearly has a sun.
-  const moonOpacity = Math.max(0, 1 - p * 2.4)
-  const sunOpacity = Math.min(1, Math.max(0, (p - 0.28) * 3))
-  const cloudOpacity = Math.min(0.9, Math.max(0, (p - 0.45) * 2))
+  // Natural, overlapping dawn (eased): stars fade and the moon SETS while the sun rises and
+  // clouds ease in a little later — no hard pop between night and day.
+  const night = 1 - smoothstep(0.1, 0.55, p) // 1 at dusk → 0 by mid-story
+  const starOpacity = night
+  const moonOpacity = night
+  const moonY = lerp(10, 34, smoothstep(0.1, 0.55, p)) // the moon lowers/sets as it fades
+  const sunOpacity = smoothstep(0.35, 0.72, p)
+  const cloudOpacity = 0.9 * smoothstep(0.5, 0.85, p)
   const moonColor = '#E9E6F2'
 
   return (
@@ -89,7 +98,7 @@ export function Scene({ p, drift = 0 }) {
           ))}
         </g>
         <g data-testid="scene-parallax" transform={`translate(${drift} 0)`} style={{ transition: 'transform 900ms linear' }}>
-          <g style={{ opacity: moonOpacity, transition: 'opacity 900ms ease-out' }}>{pixelDisc(92, 12, moonColor, MOON_ROWS)}</g>
+          <g style={{ opacity: moonOpacity, transition: 'opacity 900ms ease-out' }}>{pixelDisc(92, moonY, moonColor, MOON_ROWS)}</g>
           <g style={{ opacity: sunOpacity, transition: 'opacity 900ms ease-out' }}>
             <circle cx="58" cy={sunCenterY} r="22" fill="url(#sunGlow)" style={{ imageRendering: 'auto' }} />
             {sunRays(58, sunCenterY, '#FFE8A6')}
