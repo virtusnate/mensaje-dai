@@ -41,7 +41,7 @@ export default function App() {
         <>
           <Character emotion="walk" p={p} />
           <ProgressDots total={total} current={beat} />
-          <StoryText text={STORY[beat]} p={p} onAdvance={advance} />
+          <StoryText text={STORY[beat]} onAdvance={advance} />
         </>
       )}
 

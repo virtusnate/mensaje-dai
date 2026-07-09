@@ -3,7 +3,7 @@
 //
 // Usage:
 //   node scripts/fetch-lottie.mjs <name> <url>
-// where <name> is one of: walk | happy | heart | sad
+// where <name> is: heart   (the character is now an SVG pixel sprite; only the finale uses Lottie)
 // and <url> is a LottieFiles JSON URL, e.g. a legacy CDN link
 //   https://assets9.lottiefiles.com/packages/lf20_XXXX.json
 // or a lottie.host / assets-v2 link (copy from the "Lottie JSON" / "Copy URL" option on the animation page).
@@ -14,7 +14,7 @@ import { writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
-const VALID = ['walk', 'happy', 'heart', 'sad']
+const VALID = ['heart']
 const [, , name, url] = process.argv
 
 if (!VALID.includes(name) || !url) {

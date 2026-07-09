@@ -1,11 +1,5 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { render } from '@testing-library/react'
-
-vi.mock('lottie-react', () => ({
-  __esModule: true,
-  default: (props) => <div data-testid="lottie" data-emotion={props['data-emotion']} />,
-}))
-
 import { Character } from './Character'
 
 describe('Character', () => {
@@ -14,8 +8,13 @@ describe('Character', () => {
     expect(getByTestId('character').style.left).toBe('47.5%')
   })
 
-  it('passes the emotion through', () => {
+  it('reflects the current emotion on the root element', () => {
     const { getByTestId } = render(<Character emotion="happy" p={0} />)
-    expect(getByTestId('lottie').dataset.emotion).toBe('happy')
+    expect(getByTestId('character').dataset.emotion).toBe('happy')
+  })
+
+  it('renders a self-contained SVG pixel sprite (no external animation)', () => {
+    const { container } = render(<Character emotion="walk" p={0} />)
+    expect(container.querySelector('svg')).toBeInTheDocument()
   })
 })
